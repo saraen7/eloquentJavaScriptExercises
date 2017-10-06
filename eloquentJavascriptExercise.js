@@ -76,3 +76,50 @@ var countChar = function(a,c) {
   return b;
 }
 countChar("kakkerlak", "k");
+
+//Chapter 4
+//Exercise 1, part 1
+var range = function(start,end){
+  var numbers = [];
+  for(i = start; i <= end; i++){
+    numbers.push(i)
+  }
+  return numbers;
+}
+
+console.log(range(2,9))
+
+//Exercise 1, part 2
+var sum = function(array){
+  var total = 0;
+  for(var i = 0; i < array.length; i++){
+    total += array[i];
+  }
+  return total;
+}
+
+//Exercise 2, part 1
+var reverseArray = function(array){
+  var newArray = [];
+  newArray.push(array[0]); //adds the first item to the array
+  for(var i = 1; i < array.length; i++){
+    newArray.unshift(array[i])
+  }
+  return newArray;
+}
+
+console.log(reverseArray(["A", "B", "C"]));
+
+//Exercise 2, part 2
+var reverseArrayInPlace = function(array){
+  for(var i = 0; i < Math.floor((array.length-1)/2); i++){
+    var temp = array[i];
+    array[i] = array[array.length-1-i]; //set the first part of the array equal to the last part of the array
+    array[array.length-1-i] = temp; //set the last part of the array equal to the temporary variable
+  }
+  return array;
+}
+
+var arrayValue = [1, 2, 3, 4, 5];
+reverseArrayInPlace(arrayValue);
+console.log(arrayValue);
