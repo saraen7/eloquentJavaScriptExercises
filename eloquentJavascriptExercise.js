@@ -18,8 +18,35 @@ for (var i = 1; i <= 100; i++) {
   }
 }
 
-//Exericse 3
-//on work computer
+//chapter 2, example 3
+var size = 8;
+
+var chessBoard = "";
+
+for (var i = 0; i <= size; i++){
+  if(i%2==0){ //if i is even
+    for (var j = 0; j <= size; j++){
+      if(j%2==0){
+        chessBoard += " ";//on the even line, on the even character
+      } else {
+        chessBoard += "#"; //on the even line, on the odd character
+      }
+    }
+    chessBoard += "\n"; //new line
+  } else {
+    for (var k = 0; k <= size; k++){
+      if(k%2==0){
+        chessBoard += "#"; //on the odd line, on the even character
+      } else {
+        chessBoard += " "; //on the odd line, on the odd character
+      }
+    }
+    chessBoard += "\n"; //new line
+  }
+}
+
+console.log(chessBoard) //new line
+
 
 //Chapter 3
 //Exericse 1
@@ -123,3 +150,11 @@ var reverseArrayInPlace = function(array){
 var arrayValue = [1, 2, 3, 4, 5];
 reverseArrayInPlace(arrayValue);
 console.log(arrayValue);
+
+//Chapter 4, Exercise 3, part 1
+var arrayToList = function(array){
+
+}
+
+//Chapter 5
+//Exercise 1
