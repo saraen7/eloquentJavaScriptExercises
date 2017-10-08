@@ -367,3 +367,50 @@ function some(array,argument){
 }
 
 console.log(some([6,3,1], 2))
+
+//Chapter 6, Exercise 1, A Vector Type
+function Vector(x,y){
+  this.x = x;
+  this.y = y;
+};
+
+Vector.prototype.plus = function(otherVector){
+  return new Vector(this.x + otherVector.x, this.y + otherVector.y);
+};
+
+Vector.prototype.minus = function(otherVector){
+  return new Vector(this.x - otherVector.x, this.y - otherVector.y);
+};
+
+//What I did originally
+//get: length() {return Math.sqrt((this.x*this.x)+(this.y*this.y));}
+
+//From the author
+Object.defineProperty(Vector.prototype, "length", {
+  get: function() {
+    return Math.sqrt(this.x * this.x + this.y * this.y);
+  }
+});
+
+console.log(new Vector(1, 2).plus(new Vector(2, 3))); //to test
+
+console.log(new Vector(1, 2).minus(new Vector(2, 3))); //to test
+
+console.log(new Vector(3, 4).length); //to test
+
+//Chapter 6, Exercise 2, Another Cell
+//I really didn't understand this one
+
+//Chapter 6, Exercise 3, Sequence Interface
+//Honestly as far as I got before tapping out
+function logFive(array){
+  if(array.length <=5){
+    console.log(array);
+  } else {
+    for( var i = 0; i <= 5; i++){
+      console.log(array[i]);
+    }
+  }
+}
+
+ArraySeq = {};
