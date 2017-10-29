@@ -544,3 +544,23 @@ var number = /^(\+|-|)(\d+(\.\d*)?|\.\d+)([eE](\+|-|)\d+)?$/;
   if (number.test(s))
     console.log("Incorrectly accepted '" + s + "'");
 });
+
+//Chapter 10, Exercise 1, Month Names
+var month = function() {
+  var names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  return {
+    name: function(number) { return names[number]; },
+    number: function(name) { return names.indexOf(name); }
+  };
+}();
+
+console.log(month.name(2));
+// → March
+console.log(month.number("November"));
+// → 10
+
+//Chapter 10, Exercise 2, A Return to Electronic Life
+//skipping because I skipped Chapter 7 so far
+
+//Chapter 10, Exercise 3, Circular Dependencies
+//Thought experiment, has to do with caching 
