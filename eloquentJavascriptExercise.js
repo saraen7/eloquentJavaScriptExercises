@@ -563,4 +563,117 @@ console.log(month.number("November"));
 //skipping because I skipped Chapter 7 so far
 
 //Chapter 10, Exercise 3, Circular Dependencies
-//Thought experiment, has to do with caching 
+//Thought experiment, has to do with caching
+
+//Chapter 13, Exercise 1, Build A Table
+<!doctype html>
+<script src="code/mountains.js"></script>
+<script src="code/chapter/13_dom.js"></script>
+
+<style>
+  /* Defines a cleaner look for tables */
+  table  { border-collapse: collapse; }
+  td, th { border: 1px solid black; padding: 3px 8px; }
+  th     { text-align: left; }
+</style>
+
+<body>
+<script>
+  function buildTable(data) {
+    var table = document.createElement("table");
+
+    var fields = Object.keys(data[0]);
+    var headRow = document.createElement("tr");
+    fields.forEach(function(field) {
+      var headCell = document.createElement("th");
+      headCell.textContent = field;
+      headRow.appendChild(headCell);
+    });
+    table.appendChild(headRow);
+
+    data.forEach(function(object) {
+      var row = document.createElement("tr");
+      fields.forEach(function(field) {
+        var cell = document.createElement("td");
+        cell.textContent = object[field];
+        if (typeof object[field] == "number")
+          cell.style.textAlign = "right";
+        row.appendChild(cell);
+      });
+      table.appendChild(row);
+    });
+
+    return table;
+  }
+
+  document.body.appendChild(buildTable(MOUNTAINS));
+</script>
+</body>
+
+//Chapter 13, Exercise 2, Elements by Tag Name
+<h1>Heading with a <span>span</span> element.</h1>
+<p>A paragraph with <span>one</span>, <span>two</span>
+  spans.</p>
+
+<script>
+function byTagName(node, tagName) {
+  var found = [];
+  tagName = tagName.toUpperCase();
+
+  function explore(node) {
+    for (var i = 0; i < node.childNodes.length; i++) {
+      var child = node.childNodes[i];
+      if (child.nodeType == document.ELEMENT_NODE) {
+        if (child.nodeName == tagName)
+          found.push(child);
+        explore(child);
+      }
+    }
+  }
+
+  explore(node);
+  return found;
+}
+
+  console.log(byTagName(document.body, "h1").length);
+  // → 1
+  console.log(byTagName(document.body, "span").length);
+  // → 3
+  var para = document.querySelector("p");
+  console.log(byTagName(para, "span").length);
+  // → 2
+</script>
+
+//Chapter 13, Exercise 3, The Cat's Hat
+<!doctype html>
+<script src="code/mountains.js"></script>
+<script src="code/chapter/13_dom.js"></script>
+
+<body style="min-height: 200px">
+
+<img src="img/cat.png" id="cat" style="position: absolute">
+<img src="img/hat.png" id="hat" style="position: absolute">
+
+<script>
+  var cat = document.querySelector("#cat");
+  var hat = document.querySelector("#hat");
+
+  var angle = 0, lastTime = null;
+  function animate(time) {
+    if (lastTime != null)
+      angle += (time - lastTime) * 0.0015;
+    lastTime = time;
+
+    cat.style.top = (Math.sin(angle) * 50 + 80) + "px";
+    cat.style.left = (Math.cos(angle) * 200 + 230) + "px";
+    // By adding π to the angle, the hat ends up half a circle ahead of the cat
+    var hatAngle = angle + Math.PI;
+    hat.style.top = (Math.sin(hatAngle) * 50 + 80) + "px";
+    hat.style.left = (Math.cos(hatAngle) * 200 + 230) + "px";
+
+    requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
+</script>
+
+</body>
