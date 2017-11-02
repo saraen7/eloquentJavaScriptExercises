@@ -1127,3 +1127,69 @@ all([soon(1), fail(), soon(3)]).then(function(array) {
     }
   });
 </script>
+
+//Chapter 20, Exercise 1, Content negotiation, Again - cannot be run in the browser
+var http = require("http");
+
+function readStreamAsString(stream, callback) {
+  var content = "";
+  stream.on("data", function(chunk) {
+    content += chunk;
+  });
+  stream.on("end", function() {
+    callback(null, content);
+  });
+  stream.on("error", function(error) {
+    callback(error);
+  });
+}
+
+["text/plain", "text/html", "application/json"].forEach(function(type) {
+  http.request({
+    hostname: "eloquentjavascript.net",
+    path: "/author",
+    headers: {Accept: type}
+  }, function(response) {
+    if (response.statusCode != 200) {
+      console.error("Request for " + type + " failed: " + response.statusMessage);
+      return;
+    }
+    readStreamAsString(response, function(error, content) {
+      if (error) throw error;
+      console.log("Type " + type + ": " + content);
+    });
+  }).end();
+});
+
+//Chapter 20, Exercise 2, Fixing a Leak - cannot be run in the browser
+// The file server examples in code/file_server.js and
+// code/file_server_promises.js already contain this fixed version.
+
+function urlToPath(url) {
+  var path = require("url").parse(url).pathname;
+  var result = "." + decodeURIComponent(path);
+  for (;;) {
+    // Remove any instances of '/../' or similar
+    var simplified = result.replace(/(\/|\\)\.\.(\/|\\|$)/, "/");
+    // Keep doing this until it no longer changes the string
+    if (simplified == result) return result
+    result = simplified
+  }
+}
+
+//Chapter 20, Exericse 3, Creating directories - cannot be run in the browser
+// This code won't work on its own, but is also included in the
+// code/file_server.js file, which defines the whole system.
+
+methods.MKCOL = function(path, respond) {
+  fs.stat(path, function(error, stats) {
+    if (error && error.code == "ENOENT")
+      fs.mkdir(path, respondErrorOrNothing(respond));
+    else if (error)
+      respond(500, error.toString());
+    else if (stats.isDirectory())
+      respond(204);
+    else
+      respond(400, "File exists");
+  });
+};
